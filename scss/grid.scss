@@ -1,0 +1,73 @@
+#ingresoFormulario{
+    display: grid;
+    grid-template-columns: 35%;
+    grid-template-rows: 30vh;
+    justify-items: center;
+    align-items: center;
+    justify-content: space-around;
+    grid-template-areas: "a1" "f" "a1";
+
+    form{
+        align-self: center;
+
+            label{
+                font-size: 24px;
+                margin-top: 10px;
+            }
+            input{
+                font-size: 24px;
+                width: 90%;
+            }
+
+            button{
+                font-size: 20px;
+                width: 30%;
+            }
+            
+            .btnCheck{
+                width: 5%;
+            }
+    }
+
+        p{
+            font-size: 30px;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+            text-align: left;
+            margin-left: -15px;
+        }
+}
+
+#mIndex{
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: 100px 800px;
+    grid-template-areas:
+                        "title title title title"
+                        "p1 p2 p3 p4";
+    background-color: $color1;
+}
+
+.titulares{
+    text-align: center;
+    align-self: center;
+    font-size: 50px;
+    font-family: 'Bebas Neue', cursive;
+}
+
+
+#fSecos{
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: 100px 800px;
+    grid-template-areas:
+                        "tfs tfs tfs tfs"
+                        "fs1 fs2 fs3 fs4";
+    background-color: $color1;
+
+    button{
+        width: 50%;
+        height: 5vh;
+        margin-top: 25px;
+    }
+}

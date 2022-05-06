@@ -1,0 +1,13 @@
+@import 'grid.scss';
+
+#ingresoFormulario{
+    grid-area: f;
+}
+
+#tIndex{
+    grid-area: title;
+}
+
+#tfs{
+    grid-area: tfs;
+}

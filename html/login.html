@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Document</title>
+</head>
+<body class="fondoLogin">
+    <header>
+        <div class="nav">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="frutosSecos.html">Frutos secos</a></li>
+                <li><a href="#">Cereales</a></li>
+                <li><a href="#">Contacto</a></li>
+                <li class="select"><a href="#">Login</a></li>
+            </ul>
+        </div>
+    </header>
+    <main>
+        
+        <div id="ingresoFormulario">
+            <div>
+                <p>Bienvenido a El Portugues.</p>
+            </div>
+            <form action="">
+                <div>
+                    <label for="Usuario">Nombre de usuario: </label>
+                    <input type="text" name="Usuario" id="Usuario"> 
+                </div>
+                <div>
+                    <label for="Password">Contraseña: </label>
+                    <input type="password" name="Password" id="Password">
+                </div>
+                <div>
+                    <label for="mostrarPassword">Mostrar contraseña</label>
+                    <input class="btnCheck" type="checkbox" name="mostrarPassword" id="mostrarPassword" onclick="showPassword()">
+                </div>
+                <div>
+                    <button type="submit" onclick="validateLogin()">Entrar</button>
+                    <button type="reset">Limpiar</button>
+                </div>
+        </form>
+        </div>
+    </main>
+    <footer>
+        <div>
+            <p>Web desarrollada por Nombarasco Nicolas.</p>
+            <p>Para mas informacion click <a href="">aqui</a></p>
+        </div>
+    </footer>
+    <script src="../js/javascript.js"></script>
+</body>
+</html>
