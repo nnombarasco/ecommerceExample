@@ -1,6 +1,5 @@
 const userAdmin = "Admin";
 const passAdmin = "admin123";
-let opcion;
 let carrito = [];
 
 function ValidarNumero(num){
