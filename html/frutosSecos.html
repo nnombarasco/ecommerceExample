@@ -22,8 +22,20 @@
     <main>
         <div id="fSecos">
             <p id="tfs" class="titulares">Seccion de frutos secos.</p>
-            <p>Actualmente solo tenemos 2 productos. Por favor ingrese que producto desea comprar a continuacion presionando el boton. =></p>
-            <button onclick="comprar()">Comprar</button>
+            <p>Actualmente solo tenemos 2 productos.</p>
+            <div>
+                <label for="uNuez">Kilos a comprar</label><br>
+                <input type="text" id="uNuez" name="uNuez">
+                <button onclick="articulo_1.comprar(document.getElementById('uNuez').value)">Comprar Nueces</button>
+            </div>
+            <div>
+                <label for="uAvellanas">Kilos a comprar</label><br>
+                <input type="text" id="uAvellanas" name="uAvellanas">
+                <button onclick="articulo_2.comprar(document.getElementById('uAvellanas').value)">Comprar Avellanas</button>
+            </div>
+            <div>
+                <button onclick="finalizaCompra()">Ver total</button>
+            </div>
         </div>
     </main>
     <footer>
