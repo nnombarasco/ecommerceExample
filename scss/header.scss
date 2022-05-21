@@ -16,11 +16,13 @@ header{
             display: flex;
             list-style-type: none;
             li{
-                width: 50%;
+                width: 17%;
                 align-items: center;
                 align-content: center;
                 border: 1px solid #000;
                 text-align: center;
+
+
                 a{
                     display: block;
                     text-align: center;
@@ -29,6 +31,7 @@ header{
                     height: 100%;
                     text-decoration: none;
                     color: #000;
+                    padding-top: 4.5%;
                 }
             }
 
@@ -46,7 +49,13 @@ header{
             }
         }
     }
-    
-    
-    
 }
+                
+#carrito_ {
+    align-items: center;
+    padding-top: 6px;
+    img{
+    width: 30px;
+    }
+}
+

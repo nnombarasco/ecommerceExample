@@ -20,7 +20,7 @@ header {
       display: flex;
       list-style-type: none; }
       header .nav ul li {
-        width: 50%;
+        width: 17%;
         align-items: center;
         align-content: center;
         border: 1px solid #000;
@@ -32,7 +32,8 @@ header {
           font-size: 25px;
           height: 100%;
           text-decoration: none;
-          color: #000; }
+          color: #000;
+          padding-top: 4.5%; }
       header .nav ul li:hover {
         background-color: #22577E; }
         header .nav ul li:hover a {
@@ -40,6 +41,12 @@ header {
       header .nav ul .select {
         background-color: #22577E;
         color: #000; }
+
+#carrito_ {
+  align-items: center;
+  padding-top: 6px; }
+  #carrito_ img {
+    width: 30px; }
 
 #ingresoFormulario {
   display: grid;

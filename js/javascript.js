@@ -37,6 +37,7 @@ class Producto{
                 };
                 this.cantidad -= unidades;
                 carrito.push(compra);
+                imgCarrito.src = '../media/shopping-cart.png';
                 return carrito;
             }
         }else{
@@ -47,15 +48,24 @@ class Producto{
 
 function finalizaCompra (){
     let total = 0;
-    for (const item of carrito) {
+
+    if(carrito != null){
+        for (const item of carrito) {
         total =  total + parseInt(item.subTotal);
-        console.log("Su compra realizada fue de " + item.articulo + " por " + item.cantidad + "Kilos.");
-    }
-    if(total == 0){
+        detalle(total);
+        }
+    }if(total == 0){
         alert("No ha realizado ninguna compra.")
-    }else{
-        alert("El total a pagar es de: $" + total);
     }
+}
+
+function detalle(total){
+    let detalles_ = document.getElementById("detalles");
+
+    for(const item of carrito){
+        detalles_.innerHTML = `<div><p>El total de su compra es de $ ${total}</p></div>`;
+    }
+    
 }
 
 const articulo_1 = new Producto("Nueces", 200, 1000, true);
@@ -97,3 +107,38 @@ function showPassword(){
         tipo.type = "password";
     }
 }
+
+let imgCarrito = document.querySelector("#carrito_ img");
+
+let ticket = document.querySelector("#carrito_");
+if(ticket){
+    ticket.addEventListener("click", finalizaCompra)
+}
+
+let login = document.querySelector("#validateLogin_");
+if(login){
+    login.addEventListener("click", validateLogin);
+}
+    
+let mostrar = document.querySelector("#mostrarPassword");
+if(mostrar){
+    mostrar.addEventListener("click", showPassword);
+}
+
+let cNuez = document.querySelector("#cNueces")
+if(cNuez){
+    cNuez.addEventListener("click", function(){
+        if(document.querySelector("#uNuez").value != null){
+            articulo_1.comprar(document.querySelector("#uNuez").value);
+        };
+    });
+};
+
+let cAvellana = document.querySelector("#cAvellanas");
+if(cAvellana){
+    cAvellana.addEventListener("click", function(){
+        if(document.querySelector("#uAvellanas").value != null){
+            articulo_2.comprar(document.querySelector("#uAvellanas").value);
+        };
+    });
+};
