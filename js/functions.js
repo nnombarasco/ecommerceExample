@@ -1,6 +1,13 @@
+
+let imgCarrito = document.querySelector("#carrito_ img");
 const userAdmin = "Admin";
 const passAdmin = "admin123";
+const detalles_ = document.getElementById("detalles");
 let carrito = [];
+let id = 0;
+let indice = 0;
+
+
 
 function ValidarNumero(num){
     if((!isNaN(num) && num != "" && num != null)){
@@ -30,13 +37,20 @@ class Producto{
             }else{
                 console.log("se vende");
                 let compra = {
+                    id: id,
                     articulo: this.nombre,
                     precio: this.precio,
                     cantidad: unidades,
                     subTotal: total(unidades, this.precio)
                 };
                 this.cantidad -= unidades;
-                carrito.push(compra);
+                if(verificarArticulo(compra)){
+                    agregarArticulo(compra)
+                }else{
+                    carrito.push(compra);
+                    id += 1;
+                }
+                guardarDatos("carrito", JSON.stringify(carrito));
                 imgCarrito.src = '../media/shopping-cart.png';
                 return carrito;
             }
@@ -46,26 +60,8 @@ class Producto{
     }
 }
 
-function finalizaCompra (){
-    let total = 0;
-
-    if(carrito != null){
-        for (const item of carrito) {
-        total =  total + parseInt(item.subTotal);
-        detalle(total);
-        }
-    }if(total == 0){
-        alert("No ha realizado ninguna compra.")
-    }
-}
-
-function detalle(total){
-    let detalles_ = document.getElementById("detalles");
-
-    for(const item of carrito){
-        detalles_.innerHTML = `<div><p>El total de su compra es de $ ${total}</p></div>`;
-    }
-    
+function guardarDatos(clave, valor){
+    localStorage.setItem(clave, valor);
 }
 
 const articulo_1 = new Producto("Nueces", 200, 1000, true);
@@ -108,11 +104,86 @@ function showPassword(){
     }
 }
 
-let imgCarrito = document.querySelector("#carrito_ img");
+function verCarrito(){
+    detalles_.style.display = "block";
+    tabla();
+}
+
+function verificarArticulo(compra){
+    for(let i = 0; i < carrito.length; i++){
+        if(carrito[i].articulo == compra.articulo){
+            console.log("si esta");
+            return true;
+            
+        }else{
+            console.log("no esta");
+            return false;
+        }
+    }
+}
+
+function agregarArticulo(compra){
+    for(let i = 0; i < carrito.length; i++){
+        if(carrito[i].articulo == compra.articulo){
+            carrito[i].cantidad += compra.cantidad;
+            carrito[i].subTotal += compra.subTotal;
+        }
+    }
+}
+
+const carritoStorage = JSON.parse(localStorage.getItem('carrito')) || [];
+carrito = carritoStorage;
+if(carrito){
+    imgCarrito.src = '../media/shopping-cart.png';
+}
+
+
+function tabla(){
+    let div = document.createElement("div");
+    let btnSalir=  document.createElement("button");
+    let btnBorrarCarrito = document.createElement("button");
+    btnSalir.id = "salirDetalles";
+    btnSalir.innerText = "Salir";
+    btnBorrarCarrito.id = "borrarCarrito";
+    btnBorrarCarrito.innerText = "Borrar carrito";
+    div.appendChild(btnSalir)
+    detalles_.innerHTML = "";
+    carrito.forEach((element)=>{
+        detalles_.innerHTML += `<div>
+            <p>${element.id}) ${element.articulo} P/k$: ${element.precio} 
+            cant: ${element.cantidad} $: ${element.subTotal}</p>
+            </div>`;
+    });
+    detalles_.appendChild(div);
+    //detalles_.appendChild(btnBorrarCarrito);
+    let btnSalir_ =  document.querySelector("#salirDetalles");
+    if(btnSalir_){
+        btnSalir_.addEventListener("click", cerrarDetalle);
+    }
+}
+
+function valorTotal(entarda){
+    let total_ = 0;
+    entarda.forEach((item) => { 
+        total_ += item.subTotal 
+    });
+    console.log("Valor total de la compra es de: " +  total_);
+}
+
+function cerrarDetalle(){
+    detalles_.style.display = "none";
+}
+
+
 
 let ticket = document.querySelector("#carrito_");
 if(ticket){
-    ticket.addEventListener("click", finalizaCompra)
+    ticket.addEventListener("click", verCarrito)
+}
+
+let verCarrito_ = document.querySelector("#verCarrito");
+if(verCarrito_){
+    verCarrito_.addEventListener("click", verCarrito)
 }
 
 let login = document.querySelector("#validateLogin_");
@@ -129,7 +200,7 @@ let cNuez = document.querySelector("#cNueces")
 if(cNuez){
     cNuez.addEventListener("click", function(){
         if(document.querySelector("#uNuez").value != null){
-            articulo_1.comprar(document.querySelector("#uNuez").value);
+            articulo_1.comprar(parseInt(document.querySelector("#uNuez").value));
         };
     });
 };
@@ -138,7 +209,7 @@ let cAvellana = document.querySelector("#cAvellanas");
 if(cAvellana){
     cAvellana.addEventListener("click", function(){
         if(document.querySelector("#uAvellanas").value != null){
-            articulo_2.comprar(document.querySelector("#uAvellanas").value);
+            articulo_2.comprar(parseInt(document.querySelector("#uAvellanas").value));
         };
     });
 };

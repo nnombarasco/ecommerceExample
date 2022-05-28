@@ -100,6 +100,22 @@ header {
     height: 5vh;
     margin-top: 25px; }
 
+#detalles {
+  width: 50%;
+  height: 200px;
+  background-color: #95D1CC;
+  margin: 0 auto;
+  z-index: 10;
+  position: absolute;
+  top: 20%;
+  right: 25%;
+  display: none;
+  border: 2px solid black;
+  box-shadow: 2px 2px 5px #999; }
+  #detalles button {
+    position: absolute;
+    bottom: 3px; }
+
 #ingresoFormulario {
   display: grid;
   grid-template-columns: 35%;
@@ -151,6 +167,22 @@ header {
     width: 50%;
     height: 5vh;
     margin-top: 25px; }
+
+#detalles {
+  width: 50%;
+  height: 200px;
+  background-color: #95D1CC;
+  margin: 0 auto;
+  z-index: 10;
+  position: absolute;
+  top: 20%;
+  right: 25%;
+  display: none;
+  border: 2px solid black;
+  box-shadow: 2px 2px 5px #999; }
+  #detalles button {
+    position: absolute;
+    bottom: 3px; }
 
 #ingresoFormulario {
   grid-area: f; }

@@ -71,3 +71,23 @@
         margin-top: 25px;
     }
 }
+
+#detalles{
+    width: 50%;
+    height: 200px;
+    background-color: $color2;
+    margin: 0 auto;
+    z-index: 10;
+    position: absolute;
+    top:20%;
+    right: 25%;
+    display: none;
+    border: 2px solid black;
+    box-shadow: 2px 2px 5px #999;
+    
+    button{
+        position: absolute;
+        bottom: 3px;
+        //margin: 0 auto;
+    }
+}
