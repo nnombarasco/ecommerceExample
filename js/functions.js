@@ -6,10 +6,11 @@ const detalles_ = document.getElementById("detalles");
 let carrito = [];
 let id = 0;
 let indice = 0;
+let totalFinal = 0;
 
 
 
-function ValidarNumero(num){
+const ValidarNumero = (num) =>{
     if((!isNaN(num) && num != "" && num != null)){
         return true;
     }else{
@@ -17,9 +18,7 @@ function ValidarNumero(num){
     }
 }
 
-function total(cant, prec){
-    return cant * prec;
-}
+let total = (cant, prec) => cant * prec;
 
 class Producto{
     constructor (name, price, amount, available){
@@ -33,9 +32,12 @@ class Producto{
         if(ValidarNumero(unidades)){
             if(this.cantidad <= 0 || this.cantidad < unidades){
                 this.available = false;
-                console.log("No hay stock suficiente.");
+                swal("Error", "No hay suficiente stock", "error");
             }else{
-                console.log("se vende");
+                Toastify({
+                    text: "Agregado exitosamente",
+                    duration: 3000
+                }).showToast();
                 let compra = {
                     id: id,
                     articulo: this.nombre,
@@ -44,7 +46,7 @@ class Producto{
                     subTotal: total(unidades, this.precio)
                 };
                 this.cantidad -= unidades;
-                if(verificarArticulo(compra)){
+                if(carrito.some((item) => item.articulo === compra.articulo)){
                     agregarArticulo(compra)
                 }else{
                     carrito.push(compra);
@@ -55,14 +57,12 @@ class Producto{
                 return carrito;
             }
         }else{
-            console.log("No ingreso unidades correctas.");
+            swal("Error", "No ingreso unidades correctas.", "error");
         }
     }
 }
 
-function guardarDatos(clave, valor){
-    localStorage.setItem(clave, valor);
-}
+const guardarDatos = (clave, valor) => localStorage.setItem(clave, valor);
 
 const articulo_1 = new Producto("Nueces", 200, 1000, true);
 const articulo_2 = new Producto("Avellanas", 150, 600, true);
@@ -72,17 +72,9 @@ function validateLogin(){
     let usuario = document.getElementById('Usuario').value;
     let password = document.getElementById('Password').value;
 
-    function error(){
-        alert("Usuario o contraseña incorrectos.");
-    }
+    let error = () => swal("Error", "Usuario o contraseña incorrectos.", "error");
 
-    function vPassword(bool){
-        if(password === passAdmin && bool){
-            alert("Usuario ingresado exitosamente");
-        }else{
-            error();
-        }
-    }
+    const vPassword = (bool) => password === passAdmin && bool ? swal("Good job!", "Bienvenido", "success", "timer: 1000") : error();
 
     if(usuario.length >= 5 && usuario.length <= 16){
         if(usuario === userAdmin){
@@ -95,7 +87,7 @@ function validateLogin(){
     }
 }
 
-function showPassword(){
+let showPassword = () =>{
     let tipo = document.getElementById('Password');
     if(tipo.type == "password"){
         tipo.type = "text";
@@ -104,41 +96,25 @@ function showPassword(){
     }
 }
 
-function verCarrito(){
+let verCarrito = () => {
     detalles_.style.display = "block";
-    tabla();
-}
+    tabla()};
 
-function verificarArticulo(compra){
-    for(let i = 0; i < carrito.length; i++){
-        if(carrito[i].articulo == compra.articulo){
-            console.log("si esta");
-            return true;
-            
-        }else{
-            console.log("no esta");
-            return false;
-        }
-    }
-}
 
-function agregarArticulo(compra){
-    for(let i = 0; i < carrito.length; i++){
+const agregarArticulo = (compra)=> {
+    for (let i =0;i < carrito.length; i++){
         if(carrito[i].articulo == compra.articulo){
             carrito[i].cantidad += compra.cantidad;
             carrito[i].subTotal += compra.subTotal;
         }
     }
+    valorTotal();
 }
-
-const carritoStorage = JSON.parse(localStorage.getItem('carrito')) || [];
-carrito = carritoStorage;
-if(carrito){
-    imgCarrito.src = '../media/shopping-cart.png';
-}
-
 
 function tabla(){
+    let totalAMostrar = document.createElement("p");
+    totalAMostrar.innerText = `El total final a pagar es de $: ${totalFinal}`;
+    let div2 = document.createElement("div");
     let div = document.createElement("div");
     let btnSalir=  document.createElement("button");
     let btnBorrarCarrito = document.createElement("button");
@@ -146,7 +122,8 @@ function tabla(){
     btnSalir.innerText = "Salir";
     btnBorrarCarrito.id = "borrarCarrito";
     btnBorrarCarrito.innerText = "Borrar carrito";
-    div.appendChild(btnSalir)
+    div.appendChild(btnSalir);
+    div2.appendChild(totalAMostrar);
     detalles_.innerHTML = "";
     carrito.forEach((element)=>{
         detalles_.innerHTML += `<div>
@@ -154,6 +131,7 @@ function tabla(){
             cant: ${element.cantidad} $: ${element.subTotal}</p>
             </div>`;
     });
+    detalles_.appendChild(div2);
     detalles_.appendChild(div);
     //detalles_.appendChild(btnBorrarCarrito);
     let btnSalir_ =  document.querySelector("#salirDetalles");
@@ -162,48 +140,33 @@ function tabla(){
     }
 }
 
-function valorTotal(entarda){
-    let total_ = 0;
-    entarda.forEach((item) => { 
-        total_ += item.subTotal 
-    });
-    console.log("Valor total de la compra es de: " +  total_);
+let valorTotal = () => { totalFinal = carrito.reduce((acumulador, valorActual)=> {
+        return acumulador + valorActual.subTotal
+    },0);
 }
 
-function cerrarDetalle(){
-    detalles_.style.display = "none";
-}
-
-
+let cerrarDetalle = () => detalles_.style.display = "none";
 
 let ticket = document.querySelector("#carrito_");
-if(ticket){
-    ticket.addEventListener("click", verCarrito)
-}
+(ticket) &&  ticket.addEventListener("click", verCarrito);
 
 let verCarrito_ = document.querySelector("#verCarrito");
-if(verCarrito_){
-    verCarrito_.addEventListener("click", verCarrito)
-}
+(verCarrito_) && verCarrito_.addEventListener("click", verCarrito);
 
 let login = document.querySelector("#validateLogin_");
-if(login){
-    login.addEventListener("click", validateLogin);
-}
+(login) && login.addEventListener("click", validateLogin);
     
 let mostrar = document.querySelector("#mostrarPassword");
-if(mostrar){
-    mostrar.addEventListener("click", showPassword);
-}
+(mostrar) && mostrar.addEventListener("click", showPassword);
 
-let cNuez = document.querySelector("#cNueces")
+let cNuez = document.querySelector("#cNueces")      //aca se valida si existe componente, si exite comprobamos que no sea nulo, y mandamos lso argumentos en la funcion comprar.
 if(cNuez){
-    cNuez.addEventListener("click", function(){
+    cNuez.addEventListener("click", ()=>{
         if(document.querySelector("#uNuez").value != null){
             articulo_1.comprar(parseInt(document.querySelector("#uNuez").value));
         };
     });
-};
+}
 
 let cAvellana = document.querySelector("#cAvellanas");
 if(cAvellana){
@@ -213,3 +176,10 @@ if(cAvellana){
         };
     });
 };
+
+const carritoStorage = JSON.parse(localStorage.getItem('carrito')) || [];
+carrito = carritoStorage;
+valorTotal();
+if(carrito){
+//    imgCarrito.src = '../media/shopping-cart.png';
+}
