@@ -64,8 +64,6 @@ class Producto{
 
 const guardarDatos = (clave, valor) => localStorage.setItem(clave, valor);
 
-const articulo_1 = new Producto("Nueces", 200, 1000, true);
-const articulo_2 = new Producto("Avellanas", 150, 600, true);
 
 function validateLogin(){
     
@@ -183,3 +181,13 @@ valorTotal();
 if(carrito){
 //    imgCarrito.src = '../media/shopping-cart.png';
 }
+
+const cards = async ()=> {
+    const resp =  await  fetch('../datos.json')
+    const art = await resp.json()
+    console.log(art);
+}
+
+
+
+
