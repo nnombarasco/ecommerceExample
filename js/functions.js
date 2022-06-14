@@ -160,8 +160,10 @@ let mostrar = document.querySelector("#mostrarPassword");
 let cNuez = document.querySelector("#cNueces")      //aca se valida si existe componente, si exite comprobamos que no sea nulo, y mandamos lso argumentos en la funcion comprar.
 if(cNuez){
     cNuez.addEventListener("click", ()=>{
+        console.log(parseInt(document.querySelector("#uNuez").value))
         if(document.querySelector("#uNuez").value != null){
-            articulo_1.comprar(parseInt(document.querySelector("#uNuez").value));
+            /* articulo_1.comprar(parseInt(document.querySelector("#uNuez").value)); */
+            
         };
     });
 }
@@ -175,6 +177,15 @@ if(cAvellana){
     });
 };
 
+let cAlmendras = document.querySelector("#cAlmendras");
+if(cAlmendras){
+    cAlmendras.addEventListener("click", function(){
+        if(document.querySelector("#uAlmendras").value != null){
+            articulo_2.comprar(parseInt(document.querySelector("#uAlmendras").value));
+        };
+    });
+};
+
 const carritoStorage = JSON.parse(localStorage.getItem('carrito')) || [];
 carrito = carritoStorage;
 valorTotal();
@@ -182,12 +193,26 @@ if(carrito){
 //    imgCarrito.src = '../media/shopping-cart.png';
 }
 
+const tarjetas = document.querySelector("#fSecos");
+
 const cards = async ()=> {
+    let tarjeta = document.createElement("div")
     const resp =  await  fetch('../datos.json')
-    const art = await resp.json()
-    console.log(art);
+    const art = await resp.json();
+    /* console.log(art) */
+    for (const item of art) {
+        
+        tarjeta.innerHTML +=`
+        <div>${item.name}<br> Valor: ${item.precio}<br></div>
+        <div><input type="text" id="u${item.name}"></input></div>
+        <div><button id="c${item.name}">Comprar</button></div>
+        `;
+        tarjetas.appendChild(tarjeta);
+    }
+    
+    
 }
 
-
+cards();
 
 
