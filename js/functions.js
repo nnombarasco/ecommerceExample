@@ -7,8 +7,29 @@ let carrito = [];
 let id = 0;
 let indice = 0;
 let totalFinal = 0;
+let dataJson = {};
 
+const tarjetas = document.querySelector("#fSecos");
 
+const cards = async ()=> {
+    let tarjeta = document.createElement("div")
+    const resp =  await  fetch('../datos.json')
+    const art = await resp.json();
+    dataJson = art;
+    for (const item of art) {
+        
+        tarjeta.innerHTML +=`
+        <div><h4>${item.name}</h4><p>Valor: $${item.precio}</p></div>
+        <div><input type="text" id="u${item.name}" data-product-id= "${item.product_id}"></input></div>
+        <div><button id="c${item.name}">Agregar</button></div>
+        `;
+        tarjetas.appendChild(tarjeta);
+    }
+    
+    
+}
+
+cards();
 
 const ValidarNumero = (num) =>{
     if((!isNaN(num) && num != "" && num != null)){
@@ -27,38 +48,38 @@ class Producto{
         this.cantidad = amount;
         this.disponible = available;
     }
+}
 
-    comprar = function (unidades){
-        if(ValidarNumero(unidades)){
-            if(this.cantidad <= 0 || this.cantidad < unidades){
-                this.available = false;
-                swal("Error", "No hay suficiente stock", "error");
-            }else{
-                Toastify({
-                    text: "Agregado exitosamente",
-                    duration: 3000
-                }).showToast();
-                let compra = {
-                    id: id,
-                    articulo: this.nombre,
-                    precio: this.precio,
-                    cantidad: unidades,
-                    subTotal: total(unidades, this.precio)
-                };
-                this.cantidad -= unidades;
-                if(carrito.some((item) => item.articulo === compra.articulo)){
-                    agregarArticulo(compra)
-                }else{
-                    carrito.push(compra);
-                    id += 1;
-                }
-                guardarDatos("carrito", JSON.stringify(carrito));
-                imgCarrito.src = '../media/shopping-cart.png';
-                return carrito;
-            }
+function comprar(unidades, producto){ //cambiar funcion para que reciba cantidad y producto a vender, luego ese producto ser restado de la variable para controlar stock
+    if(ValidarNumero(unidades)){
+        if(producto.cantidad <= 0 || producto.cantidad < unidades){
+            producto.available = false;
+            swal("Error", "No hay suficiente stock", "error");
         }else{
-            swal("Error", "No ingreso unidades correctas.", "error");
+            Toastify({
+                text: "Agregado exitosamente",
+                duration: 3000
+            }).showToast();
+            let compra = {
+                id: id,
+                articulo: producto.name,
+                precio: producto.precio,
+                cantidad: unidades,
+                subTotal: total(unidades, producto.precio)
+            };
+            producto.cantidad -= unidades;
+            if(carrito.some((item) => item.articulo === compra.articulo)){
+                agregarArticulo(compra)
+            }else{
+                carrito.push(compra);
+                id += 1;
+            }
+            guardarDatos("carrito", JSON.stringify(carrito));
+            imgCarrito.src = '../media/shopping-cart.png';
+            return carrito;
         }
+    }else{
+        swal("Error", "No ingreso unidades correctas.", "error");
     }
 }
 
@@ -157,13 +178,12 @@ let login = document.querySelector("#validateLogin_");
 let mostrar = document.querySelector("#mostrarPassword");
 (mostrar) && mostrar.addEventListener("click", showPassword);
 
-let cNuez = document.querySelector("#cNueces")      //aca se valida si existe componente, si exite comprobamos que no sea nulo, y mandamos lso argumentos en la funcion comprar.
+let cNuez = document.querySelector("#cNueces")      //aca se valida si existe componente, si exite comprobamos que no sea nulo, y mandamos los argumentos en la funcion comprar.
 if(cNuez){
     cNuez.addEventListener("click", ()=>{
-        console.log(parseInt(document.querySelector("#uNuez").value))
-        if(document.querySelector("#uNuez").value != null){
-            /* articulo_1.comprar(parseInt(document.querySelector("#uNuez").value)); */
-            
+        console.log((document.querySelector("#uNueces").value))
+        if(document.querySelector("#uNueces").value != null){
+            comprar(parseInt(document.querySelector("#uNueces").value), dataJson[0]);
         };
     });
 }
@@ -172,7 +192,7 @@ let cAvellana = document.querySelector("#cAvellanas");
 if(cAvellana){
     cAvellana.addEventListener("click", function(){
         if(document.querySelector("#uAvellanas").value != null){
-            articulo_2.comprar(parseInt(document.querySelector("#uAvellanas").value));
+            comprar(parseInt(document.querySelector("#uAvellanas").value), dataJson[1]);
         };
     });
 };
@@ -181,7 +201,7 @@ let cAlmendras = document.querySelector("#cAlmendras");
 if(cAlmendras){
     cAlmendras.addEventListener("click", function(){
         if(document.querySelector("#uAlmendras").value != null){
-            articulo_2.comprar(parseInt(document.querySelector("#uAlmendras").value));
+            comprar(parseInt(document.querySelector("#uAlmendras").value), dataJson[2]);
         };
     });
 };
@@ -193,26 +213,6 @@ if(carrito){
 //    imgCarrito.src = '../media/shopping-cart.png';
 }
 
-const tarjetas = document.querySelector("#fSecos");
 
-const cards = async ()=> {
-    let tarjeta = document.createElement("div")
-    const resp =  await  fetch('../datos.json')
-    const art = await resp.json();
-    /* console.log(art) */
-    for (const item of art) {
-        
-        tarjeta.innerHTML +=`
-        <div>${item.name}<br> Valor: ${item.precio}<br></div>
-        <div><input type="text" id="u${item.name}"></input></div>
-        <div><button id="c${item.name}">Comprar</button></div>
-        `;
-        tarjetas.appendChild(tarjeta);
-    }
-    
-    
-}
-
-cards();
 
 

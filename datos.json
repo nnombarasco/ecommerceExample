@@ -1,17 +1,20 @@
 [
     {
+      "product_id": 0,
       "name": "Nueces",
       "precio": 200,
       "cantidad": 1000,
       "disponibilidad": true
     },
     {
+      "product_id": 1,
       "name": "Avellanas",
       "precio": 150,
       "cantidad": 600,
       "disponibilidad": true
     },
     {
+      "product_id": 2,
       "name": "Almendras",
       "precio": 230,
       "cantidad": 750,
