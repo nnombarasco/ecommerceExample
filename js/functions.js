@@ -11,26 +11,6 @@ let dataJson = {};
 
 const tarjetas = document.querySelector("#fSecos");
 
-const cards = async ()=> {
-    let tarjeta = document.createElement("div")
-    const resp =  await  fetch('../datos.json')
-    const art = await resp.json();
-    dataJson = art;
-    for (const item of art) {
-        
-        tarjeta.innerHTML +=`
-        <div><h4>${item.name}</h4><p>Valor: $${item.precio}</p></div>
-        <div><input type="text" id="u${item.name}" data-product-id= "${item.product_id}"></input></div>
-        <div><button id="c${item.name}">Agregar</button></div>
-        `;
-        tarjetas.appendChild(tarjeta);
-    }
-    
-    
-}
-
-cards();
-
 const ValidarNumero = (num) =>{
     if((!isNaN(num) && num != "" && num != null)){
         return true;
@@ -50,7 +30,7 @@ class Producto{
     }
 }
 
-function comprar(unidades, producto){ //cambiar funcion para que reciba cantidad y producto a vender, luego ese producto ser restado de la variable para controlar stock
+function comprar(unidades, producto, indice){ //cambiar funcion para que reciba cantidad y producto a vender, luego ese producto ser restado de la variable para controlar stock
     if(ValidarNumero(unidades)){
         if(producto.cantidad <= 0 || producto.cantidad < unidades){
             producto.available = false;
@@ -84,7 +64,6 @@ function comprar(unidades, producto){ //cambiar funcion para que reciba cantidad
 }
 
 const guardarDatos = (clave, valor) => localStorage.setItem(clave, valor);
-
 
 function validateLogin(){
     
@@ -178,33 +157,6 @@ let login = document.querySelector("#validateLogin_");
 let mostrar = document.querySelector("#mostrarPassword");
 (mostrar) && mostrar.addEventListener("click", showPassword);
 
-let cNuez = document.querySelector("#cNueces")      //aca se valida si existe componente, si exite comprobamos que no sea nulo, y mandamos los argumentos en la funcion comprar.
-if(cNuez){
-    cNuez.addEventListener("click", ()=>{
-        console.log((document.querySelector("#uNueces").value))
-        if(document.querySelector("#uNueces").value != null){
-            comprar(parseInt(document.querySelector("#uNueces").value), dataJson[0]);
-        };
-    });
-}
-
-let cAvellana = document.querySelector("#cAvellanas");
-if(cAvellana){
-    cAvellana.addEventListener("click", function(){
-        if(document.querySelector("#uAvellanas").value != null){
-            comprar(parseInt(document.querySelector("#uAvellanas").value), dataJson[1]);
-        };
-    });
-};
-
-let cAlmendras = document.querySelector("#cAlmendras");
-if(cAlmendras){
-    cAlmendras.addEventListener("click", function(){
-        if(document.querySelector("#uAlmendras").value != null){
-            comprar(parseInt(document.querySelector("#uAlmendras").value), dataJson[2]);
-        };
-    });
-};
 
 const carritoStorage = JSON.parse(localStorage.getItem('carrito')) || [];
 carrito = carritoStorage;
@@ -213,6 +165,46 @@ if(carrito){
 //    imgCarrito.src = '../media/shopping-cart.png';
 }
 
+const cards = async ()=> {
+    let tarjeta = document.createElement("div")
+    const resp =  await  fetch('../datos.json')
+    const art = await resp.json();
+    dataJson = art;
+    for (const item of art) {
+        
+        tarjeta.innerHTML +=`
+        <div class="card"><h4>${item.name}</h4><p>Valor: $${item.precio}</p>
+        <input type="text" id="u${item.name}" data-product-id= "${item.product_id}"></input>
+        <button id="c${item.name}">Agregar</button></div>
+        `;
+        tarjetas.appendChild(tarjeta);
+    }
+    let cNuez = document.querySelector("#cNueces")      //aca se valida si existe componente, si exite comprobamos que no sea nulo, y mandamos los argumentos en la funcion comprar.
+    let cAvellana = document.querySelector("#cAvellanas");
+    let cAlmendras = document.querySelector("#cAlmendras");
+    if(cNuez){
+        cNuez.addEventListener("click", ()=>{
+            if(document.querySelector("#uNueces").value != null){
+                comprar(parseInt(document.querySelector("#uNueces").value), dataJson[0], 0);
+            };
+        });
+    };
+    
+    if(cAvellana){
+        cAvellana.addEventListener("click", function(){
+            if(document.querySelector("#uAvellanas").value != null){
+                comprar(parseInt(document.querySelector("#uAvellanas").value), dataJson[1], 1);
+            };
+        });
+    };
+    
+    if(cAlmendras){
+        cAlmendras.addEventListener("click", function(){
+            if(document.querySelector("#uAlmendras").value != null){
+                comprar(parseInt(document.querySelector("#uAlmendras").value), dataJson[2], 2);
+            };
+        });
+    };
+}
 
-
-
+cards();

@@ -116,6 +116,17 @@ header {
     position: absolute;
     bottom: 3px; }
 
+.card {
+  background-color: #5584AC;
+  border: 1px solid #000;
+  margin: 10px;
+  text-align: center;
+  padding-bottom: 10px; }
+  .card button {
+    width: 50%; }
+  .card input {
+    width: 50%; }
+
 #ingresoFormulario {
   display: grid;
   grid-template-columns: 35%;
@@ -183,6 +194,17 @@ header {
   #detalles button {
     position: absolute;
     bottom: 3px; }
+
+.card {
+  background-color: #5584AC;
+  border: 1px solid #000;
+  margin: 10px;
+  text-align: center;
+  padding-bottom: 10px; }
+  .card button {
+    width: 50%; }
+  .card input {
+    width: 50%; }
 
 #ingresoFormulario {
   grid-area: f; }

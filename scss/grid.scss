@@ -91,3 +91,19 @@
         //margin: 0 auto;
     }
 }
+
+.card{
+    background-color: $color3;
+    border: 1px solid #000;
+    margin: 10px;
+    text-align: center;
+    padding-bottom: 10px;
+
+    button{
+        width: 50%;
+    }
+
+    input{
+        width: 50%;
+    }
+}
