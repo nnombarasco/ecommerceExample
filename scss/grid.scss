@@ -1,3 +1,4 @@
+
 #ingresoFormulario{
     display: grid;
     grid-template-columns: 35%;
@@ -58,18 +59,20 @@
 
 #fSecos{
     display: grid;
-    grid-template-columns: repeat(4, 25%);
+    grid-template-columns: 80%;
     grid-template-rows: 100px 800px;
     grid-template-areas:
-                        "tfs tfs tfs tfs"
-                        "fs1 fs2 fs3 fs4";
+                        "tfs"
+                        "fs2";
     background-color: $color1;
+    justify-content: center;
 
-    button{
-        width: 50%;
-        height: 5vh;
-        margin-top: 25px;
-    }
+    #verCarrito{
+        width: 30%;
+        height: 20%;
+        margin-left: 40%;
+        margin-bottom: 20px;
+        }
 }
 
 #detalles{
@@ -92,18 +95,34 @@
     }
 }
 
+
+
 .card{
+    display: block;
+    height: 200px;
+    width: 100%;
     background-color: $color3;
     border: 1px solid #000;
     margin: 10px;
     text-align: center;
     padding-bottom: 10px;
 
+    img{
+        padding: 10px;
+        width: 36%;
+        float: left;
+    }
+
     button{
-        width: 50%;
+        width: 15%;
+        float: right;
+        margin-right: 68px;
+        height: 26px;
     }
 
     input{
-        width: 50%;
+        width: 20%;
+        height: 20px;
+        
     }
 }

@@ -148,9 +148,6 @@ let cerrarDetalle = () => detalles_.style.display = "none";
 let ticket = document.querySelector("#carrito_");
 (ticket) &&  ticket.addEventListener("click", verCarrito);
 
-let verCarrito_ = document.querySelector("#verCarrito");
-(verCarrito_) && verCarrito_.addEventListener("click", verCarrito);
-
 let login = document.querySelector("#validateLogin_");
 (login) && login.addEventListener("click", validateLogin);
     
@@ -166,14 +163,16 @@ if(carrito){
 }
 
 const cards = async ()=> {
-    let tarjeta = document.createElement("div")
-    const resp =  await  fetch('../datos.json')
+    let tarjeta = document.createElement("div");
+    tarjeta.setAttribute("id", "fs2");
+    let btnVerCarrito = document.createElement("div");
+    const resp =  await  fetch('../datos.json');
     const art = await resp.json();
     dataJson = art;
     for (const item of art) {
         
         tarjeta.innerHTML +=`
-        <div class="card"><h4>${item.name}</h4><p>Valor: $${item.precio}</p>
+        <div class="card"><img src="${item.img}"></img><h4>${item.name}</h4><p>Valor: $${item.precio}</p>
         <input type="text" id="u${item.name}" data-product-id= "${item.product_id}"></input>
         <button id="c${item.name}">Agregar</button></div>
         `;
@@ -182,6 +181,12 @@ const cards = async ()=> {
     let cNuez = document.querySelector("#cNueces")      //aca se valida si existe componente, si exite comprobamos que no sea nulo, y mandamos los argumentos en la funcion comprar.
     let cAvellana = document.querySelector("#cAvellanas");
     let cAlmendras = document.querySelector("#cAlmendras");
+    let btnCarrito =  document.querySelector("#verCarrito");
+
+    btnVerCarrito.innerHTML = `<div><button id="verCarrito">Ver Carrito</button></div>`;
+    tarjetas.appendChild(btnVerCarrito);
+
+
     if(cNuez){
         cNuez.addEventListener("click", ()=>{
             if(document.querySelector("#uNueces").value != null){
@@ -205,6 +210,13 @@ const cards = async ()=> {
             };
         });
     };
+
+    if(verCarrito){
+        let verCarrito_ = document.querySelector("#verCarrito");
+        (verCarrito_) && verCarrito_.addEventListener("click", verCarrito);
+    }
+    
+/*     tarjetas.setAttribute("id", "fs2"); */
 }
 
 cards();
